@@ -282,7 +282,7 @@ vec crossProd(vec v1, vec v2) {
 }
 
 f32 vecMagnitude(vec v) {
-    return sqrt(magnitudeSquared(v));
+    return sqrt(vecMagnitudeSquared(v));
 }
 
 f32 vecMagnitudeSquared(vec v) {
@@ -296,7 +296,7 @@ f32 vecMagnitudeSquared(vec v) {
 
 vec vecNormalized(vec v) {
     vec ret = allocateVec(v.dim);
-    f32 mag = magnitude(v);
+    f32 mag = vecMagnitude(v);
 
     for (u32 i = 0; i< v.dim; i++)
         ret.elements[i] /= mag;
@@ -305,7 +305,7 @@ vec vecNormalized(vec v) {
 }
 
 void vecNormalize(vec* v) {
-    f32 mag = magnitude(*v);
+    f32 mag = vecMagnitude(*v);
 
     for (u32 i = 0; i < v->dim; i++)
         v->elements[i] /= mag;
