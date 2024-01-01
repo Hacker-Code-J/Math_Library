@@ -2,6 +2,9 @@
 CC = gcc
 CFLAGS = -Wall -Icmath/include
 
+# Linker settings
+LDFLAGS = -lm
+
 # Project files
 SRC_DIR = cmath/src
 SRCS = $(wildcard $(SRC_DIR)/*.c) main.c
@@ -12,7 +15,7 @@ TARGET = test
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
