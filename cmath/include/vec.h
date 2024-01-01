@@ -25,6 +25,11 @@ vec allocateVec(u32 dim);
 /**
  * 
 */
+void freeVec(vec* v);
+
+/**
+ * 
+*/
 vec createDefaultVec(u32 dim, f32 val);
 
 /**
@@ -55,37 +60,45 @@ void printVec(vec v);
 /**
  * 
 */
-bool equals(vec v1, vec v2);
+bool vecEquals(vec v1, vec v2);
 
 /**
  * 
 */
-vec scalarMul(vec v, f32 k);
+vec vecScalarAdd(vec v, f32 k);
 
-void scalarMulBy(vec* v, f32 k);
+void vecScalarAddTo(vec* v, f32 k);
 
-vec scalarDiv(vec v, f32 k);
+vec vecScalarSub(vec v, f32 k);
 
-void scalarDivBy(vec* v, f32 k);
+void vecScalarSubFrom(vec* v, f32 k);
 
-vec power(vec v, f32 k);
-void powerOf(vec* v, f32 k);
+vec vecScalarMul(vec v, f32 k);
 
-vec add(vec v1, vec v2);
+void vecScalarMulBy(vec* v, f32 k);
 
-bool addTo(vec* v1, vec v2);
+vec vecScalarDiv(vec v, f32 k);
 
-vec subtract(vec v1, vec v2);
+void vecScalarDivBy(vec* v, f32 k);
 
-bool subtractFrom(vec* v1, vec v2);
+vec vecPower(vec v, f32 k);
+void vecPowerOf(vec* v, f32 k);
 
-vec multiply(vec v1, vec v2);
+vec vecAdd(vec v1, vec v2);
 
-bool multiplyBy(vec* v1, vec v2);
+bool vecAddTo(vec* v1, vec v2);
 
-vec divide(vec v1, vec v2);
+vec vecSub(vec v1, vec v2);
 
-bool divideBy(vec* v1, vec v2);
+bool vecSubFrom(vec* v1, vec v2);
+
+vec vecMul(vec v1, vec v2);
+
+bool vecMulBy(vec* v1, vec v2);
+
+vec vecDiv(vec v1, vec v2);
+
+bool vecDivBy(vec* v1, vec v2);
 
 f32 dotProd(vec v1, vec v2);
 
@@ -93,12 +106,12 @@ bool orthogonal(vec v1, vec v2);
 
 vec crossProd(vec v1, vec v2);
 
-f32 magnitude(vec v);
+f32 vecMagnitude(vec v);
 
-f32 magnitudeSquared(vec v);
+f32 vecMagnitudeSquared(vec v);
 
-vec normalized(vec v);
+vec vecNormalized(vec v);
 
-void normalize(vec* v);
+void vecNormalize(vec* v);
 
 #endif // _VEC_H

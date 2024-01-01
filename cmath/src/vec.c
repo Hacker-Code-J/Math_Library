@@ -17,6 +17,15 @@ vec allocateVec(u32 dim) {
 /**
  * 
 */
+void freeVec(vec* v) {
+    free(v->elements);
+    v->elements = NULL;
+    v->dim = 0;
+}
+
+/**
+ * 
+*/
 vec createDefaultVec(u32 dim, f32 val) {
     vec ret = allocateVec(dim);
 
@@ -75,7 +84,7 @@ void printVec(vec v) {
     printf("]\n");
 }
 
-bool equals(vec v1, vec v2) {
+bool vecEquals(vec v1, vec v2) {
     if (v1.dim == v2.dim) {
         for(u32 i = 0; i < v1.dim; i++) {
             if(v1.elements != v2.elements) return false;
@@ -85,7 +94,35 @@ bool equals(vec v1, vec v2) {
     return false;
 }
 
-vec scalarMul(vec v, f32 k) {
+vec vecScalarAdd(vec v, f32 k) {
+    vec ret = allocateVec(v.dim);
+
+    for(u32 i = 0; i < ret.dim; i++)
+        ret.elements[i] = v.elements[i] + k;
+
+    return ret;
+}
+
+void vecScalarAddTo(vec* v, f32 k) {
+    for(u32 i = 0; i < v->dim; i++)
+        v->elements[i] += k;
+}
+
+vec vecScalarSub(vec v, f32 k) {
+    vec ret = allocateVec(v.dim);
+
+    for(u32 i = 0; i < ret.dim; i++)
+        ret.elements[i] = v.elements[i] - k;
+
+    return ret;
+}
+
+void vecScalarSubFrom(vec* v, f32 k) {
+    for(u32 i = 0; i < v->dim; i++)
+        v->elements[i] -= k;
+}
+
+vec vecScalarMul(vec v, f32 k) {
     vec ret = allocateVec(v.dim);
 
     for(u32 i = 0; i < ret.dim; i++)
@@ -94,12 +131,12 @@ vec scalarMul(vec v, f32 k) {
     return ret;
 }
 
-void scalarMulBy(vec* v, f32 k) {
+void vecScalarMulBy(vec* v, f32 k) {
     for (u32 i = 0; i < v->dim; i++)
         v->elements[i] *= k;
 }
 
-vec scalarDiv(vec v, f32 k) {
+vec vecScalarDiv(vec v, f32 k) {
     vec ret = allocateVec(v.dim);
 
     for(u32 i = 0; i < ret.dim; i++)
@@ -108,12 +145,12 @@ vec scalarDiv(vec v, f32 k) {
     return ret;
 }
 
-void scalarDivBy(vec* v, f32 k) {
+void vecScalarDivBy(vec* v, f32 k) {
     for (u32 i = 0; i < v->dim; i++)
         v->elements[i] /= k;
 }
 
-vec power(vec v, f32 k) {
+vec vecPower(vec v, f32 k) {
     vec ret = allocateVec(v.dim);
 
     for (u32 i = 0; i < ret.dim; i++)
@@ -122,12 +159,12 @@ vec power(vec v, f32 k) {
     return ret;
 }
 
-void powerOf(vec* v, f32 k) {
+void vecPowerOf(vec* v, f32 k) {
     for (u32 i = 0; i < v->dim; i++)
         v->elements[i] = powf(v->elements[i], k);
 }
 
-vec add(vec v1, vec v2) {
+vec vecAdd(vec v1, vec v2) {
     if(v1.dim != v2.dim)
         return VEC_UNDEFINED;
 
@@ -139,7 +176,7 @@ vec add(vec v1, vec v2) {
     return ret;
 }
 
-bool addTo(vec* v1, vec v2) {
+bool vecAddTo(vec* v1, vec v2) {
     if (v1->dim != v2.dim)
         return false;
 
@@ -149,7 +186,7 @@ bool addTo(vec* v1, vec v2) {
     return true;
 }
 
-vec subtract(vec v1, vec v2) {
+vec vecSub(vec v1, vec v2) {
     if(v1.dim != v2.dim)
         return VEC_UNDEFINED;
 
@@ -161,7 +198,7 @@ vec subtract(vec v1, vec v2) {
     return ret;
 }
 
-bool subtractFrom(vec* v1, vec v2) {
+bool vecSubFrom(vec* v1, vec v2) {
     if (v1->dim != v2.dim)
         return false;
 
@@ -171,7 +208,7 @@ bool subtractFrom(vec* v1, vec v2) {
     return true;
 }
 
-vec multiply(vec v1, vec v2) {
+vec vecMul(vec v1, vec v2) {
     if(v1.dim != v2.dim)
         return VEC_UNDEFINED;
 
@@ -183,7 +220,7 @@ vec multiply(vec v1, vec v2) {
     return ret;
 }
 
-bool multiplyBy(vec* v1, vec v2) {
+bool vecMulBy(vec* v1, vec v2) {
     if (v1->dim != v2.dim)
         return false;
 
@@ -193,7 +230,7 @@ bool multiplyBy(vec* v1, vec v2) {
     return true;
 }
 
-vec divide(vec v1, vec v2) {
+vec vecDiv(vec v1, vec v2) {
     if(v1.dim != v2.dim)
         return VEC_UNDEFINED;
 
@@ -205,7 +242,7 @@ vec divide(vec v1, vec v2) {
     return ret;
 }
 
-bool divideBy(vec* v1, vec v2) {
+bool vecDivBy(vec* v1, vec v2) {
     if (v1->dim != v2.dim)
         return false;
 
@@ -244,11 +281,11 @@ vec crossProd(vec v1, vec v2) {
     return ret;
 }
 
-f32 magnitude(vec v) {
+f32 vecMagnitude(vec v) {
     return sqrt(magnitudeSquared(v));
 }
 
-f32 magnitudeSquared(vec v) {
+f32 vecMagnitudeSquared(vec v) {
     f32 ret = 0.0f;
 
     for (u32 i = 0; i < v.dim; i++)
@@ -257,7 +294,7 @@ f32 magnitudeSquared(vec v) {
     return ret;
 }
 
-vec normalized(vec v) {
+vec vecNormalized(vec v) {
     vec ret = allocateVec(v.dim);
     f32 mag = magnitude(v);
 
@@ -267,7 +304,7 @@ vec normalized(vec v) {
     return ret;
 }
 
-void normalize(vec* v) {
+void vecNormalize(vec* v) {
     f32 mag = magnitude(*v);
 
     for (u32 i = 0; i < v->dim; i++)

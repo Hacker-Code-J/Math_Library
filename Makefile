@@ -27,3 +27,7 @@ clean:
 	rm -f $(OBJS) $(TARGET)
 
 rebuild: clean all
+
+leak:
+	valgrind --leak-check=full --show-leak-kinds=all ./test
+

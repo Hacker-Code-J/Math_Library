@@ -8,10 +8,10 @@ mat allocateMat(u32 rows, u32 cols) {
     ret.rows = rows;
     ret.cols = cols;
 
-    ret.elements = (f32**)malloc(rows * sizeof(f32));
+    ret.elements = malloc(rows * sizeof(f32));
 
     for (u32 i = 0; i < rows; i++)
-        ret.elements[i] = (f32*)malloc(cols * sizeof(f32));
+        ret.elements[i] = malloc(cols * sizeof(f32));
 
     return ret;
 }
@@ -38,16 +38,34 @@ mat zeroMat(u32 rows, u32 cols) {
     return ret;
 }
 
+// mat newMat(u32 rows, u32 cols, ...) {
+//     mat ret = allocateMat(rows, cols);
+
+//     va_list list;
+//     u32 size = rows * cols;
+//     va_start(list, size);
+
+//     for (u32 r = 0; r < rows; r++) {
+//         for (u32 c = 0; c < cols; c++)
+//             ret.elements[r][c] = va_arg(list, double);
+//     }
+
+//     va_end(list);
+
+//     return ret;
+// }
+
 mat newMat(u32 rows, u32 cols, ...) {
     mat ret = allocateMat(rows, cols);
 
     va_list list;
-    u32 size = rows * cols;
-    va_start(list, size);
+    va_start(list, cols); // 'cols' is the last named argument
 
-    for (u32 r = 0; r < rows; r++) {
-        for (u32 c = 0; c < cols; c++)
-            ret.elements[r][c] = va_arg(list, double);
+    u32 size = rows * cols; // Calculate the size inside the function
+    for (u32 i = 0; i < size; i++) {
+        u32 r = i / cols;
+        u32 c = i % cols;
+        ret.elements[r][c] = va_arg(list, double);
     }
 
     va_end(list);
