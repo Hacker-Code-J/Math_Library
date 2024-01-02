@@ -499,95 +499,95 @@ mat augmentMat(mat* m, mat* M) {
     return ret;
 }
 
-mat spliceMat(mat* m, u32 exRow, u32 exCol) {
-    exRow--; exCol--;
+// mat spliceMat(mat* m, u32 exRow, u32 exCol) {
+//     exRow--; exCol--;
 
-    mat ret = allocateMat(m->rows - 1, m->cols - 1);
+//     mat ret = allocateMat(m->rows - 1, m->cols - 1);
 
-    u32 rowOffset = 0;
-    for (u32 r = 0; r < ret.rows; r++) {
-        u32 colOffset = 0;
+//     u32 rowOffset = 0;
+//     for (u32 r = 0; r < ret.rows; r++) {
+//         u32 colOffset = 0;
 
-        if (r == exRow) rowOffset++;
+//         if (r == exRow) rowOffset++;
 
-        for (u32 c = 0; c < ret.cols; c++) {
-            if (c == exCol) colOffset++;
+//         for (u32 c = 0; c < ret.cols; c++) {
+//             if (c == exCol) colOffset++;
 
-            ret.elements[r][c] = m->elements[r + rowOffset][c + colOffset];
-        }
+//             ret.elements[r][c] = m->elements[r + rowOffset][c + colOffset];
+//         }
 
-        return ret;
-    }
-}
+//         return ret;
+//     }
+// }
 
-f32 cofactor(mat* m, u32 r, u32 c) {
-    if (m->rows != m->cols || m->rows == 0) return 0.0f;
-    if (r > m->rows || c > m->cols) return 0.0f;
+// f32 cofactor(mat* m, u32 r, u32 c) {
+//     if (m->rows != m->cols || m->rows == 0) return 0.0f;
+//     if (r > m->rows || c > m->cols) return 0.0f;
 
-    u8 sgn = ((r + c) & 1) == 0 ? 1: -1;
+//     u8 sgn = ((r + c) & 1) == 0 ? 1: -1;
 
-    mat refineMat = spliceMat(m, r, c);
+//     mat refineMat = spliceMat(m, r, c);
 
-    f32 ret = sgn;
+//     f32 ret = sgn;
 
-    freeMat(&refineMat);
+//     freeMat(&refineMat);
 
-    return ret;
-}
-mat cofactorMat(mat *m) {
-    if (m->rows != m->cols || m->rows == 0) return MAT_UNDEFINED;
+//     return ret;
+// }
+// mat cofactorMat(mat *m) {
+//     if (m->rows != m->cols || m->rows == 0) return MAT_UNDEFINED;
 
-    mat ret = allocateMat(m->rows, m->cols);
+//     mat ret = allocateMat(m->rows, m->cols);
 
-    for (u32 r = 0; r < ret.rows; r++) {
-        for (u32 c = 0; c < ret.cols; c++)
-            ret.elements[r][c] = cofactor(m, r + 1, c + 1);
-    }
+//     for (u32 r = 0; r < ret.rows; r++) {
+//         for (u32 c = 0; c < ret.cols; c++)
+//             ret.elements[r][c] = cofactor(m, r + 1, c + 1);
+//     }
 
-    return ret;
-}
+//     return ret;
+// }
 
-f32 det(mat* m) {
-    if (m->rows != m->cols || m->rows == 0) return 0.0f;
+// f32 det(mat* m) {
+//     if (m->rows != m->cols || m->rows == 0) return 0.0f;
 
-    f32 ret = 0.0f;
+//     f32 ret = 0.0f;
 
-    for (u32 c = 0; c < m->cols; c++) {
-        if(m->elements[0][c] != 0.0f)
-            ret += m->elements[0][c] * cofactor(m, 1, c + 1);
-    }
+//     for (u32 c = 0; c < m->cols; c++) {
+//         if(m->elements[0][c] != 0.0f)
+//             ret += m->elements[0][c] * cofactor(m, 1, c + 1);
+//     }
 
-    return ret;
-}
+//     return ret;
+// }
 
 
-f32 mainDetExclusion(mat* m) {
-    if (m->rows != m->cols || m->rows == 0) return 0.0f;
+// f32 mainDetExclusion(mat* m) {
+//     if (m->rows != m->cols || m->rows == 0) return 0.0f;
     
-    u32* skipCols = (u32*)malloc(m->cols * sizeof(u32*));
-    u32 noSkipCols = 0;
+//     u32* skipCols = (u32*)malloc(m->cols * sizeof(u32*));
+//     u32 noSkipCols = 0;
 
-    f32 ret = subDetExclusion(m, 1, 0, skipCols, &noSkipCols);
+//     f32 ret = subDetExclusion(m, 1, 0, skipCols, &noSkipCols);
 
-    free(skipCols);
+//     free(skipCols);
 
-    return ret;
-}
+//     return ret;
+// }
 
 
-f32 subDetExclusion(mat* m, u32 row, u32 col, u32* skipCols, u32* noSkipCols) {
-    skipCols[*noSkipCols] = col;
-    (*noSkipCols)++;
+// f32 subDetExclusion(mat* m, u32 row, u32 col, u32* skipCols, u32* noSkipCols) {
+//     skipCols[*noSkipCols] = col;
+//     (*noSkipCols)++;
 
-    if (row == m->rows - 1) printf("");
+//     if (row == m->rows - 1) printf(" ");
 
-    if (row == m->rows) {
-        u32 c = m->cols;
+//     if (row == m->rows) {
+//         u32 c = m->cols;
 
-        if (*noSkipCols != 0) {
-            if (skipCols[*noSkipCols - 1] != 0) {
-                // while (arrCO)
-            }
-        }
-    }
-}
+//         if (*noSkipCols != 0) {
+//             if (skipCols[*noSkipCols - 1] != 0) {
+//                 // while (arrCO)
+//             }
+//         }
+//     }
+// }

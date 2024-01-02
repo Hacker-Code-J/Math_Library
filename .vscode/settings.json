@@ -58,6 +58,9 @@
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
     "config.h": "c",
-    "cmath_config.h": "c"
+    "cmath_config.h": "c",
+    "random": "c",
+    "bigint.h": "c",
+    "vec.h": "c"
   }
 }

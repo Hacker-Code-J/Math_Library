@@ -3,11 +3,19 @@
 #include "cmath/include/cmath_config.h"
 #include "cmath/include/vec.h"
 #include "cmath/include/matrix.h"
+#include "cmath/include/bigint.h"
 
 int main() {
+    printf("%ld %ld\n", sizeof(BINT)*8, sizeof(bigint)*8);
     
-    
-    
+    bigint data = strToBigint("5645654");
+    bigint data2 = newBigint(181231278);
+
+    printf("%s\n", bigintToString(data2));
+    printf("%d\n", (int)compareBigint(data, data2));
+
+    freeBigint(&data);
+    freeBigint(&data2);
     
     // printf("Hello! %ld\n", sizeof(long double));
 
@@ -92,26 +100,26 @@ int main() {
     // freeMat(&m2);
     // freeMat(&resMat);
 
-    mat m = matrix(4, 4,
-        2.0f, -1.0f, 3.0f, 5.0f,
-        1.0f, -3.0f, 0.0f, 4.0f,
-        3.0f, 0.0f, -1.0f, -2.0f,
-        0.0f, 0.0f, 0.0f, 1.0f
-    );
-    printMat(m);
-    printf("\n");
-    REF(&m);
-    printf("\n");
-    printMat(m);
+    // mat m = matrix(4, 4,
+    //     2.0f, -1.0f, 3.0f, 5.0f,
+    //     1.0f, -3.0f, 0.0f, 4.0f,
+    //     3.0f, 0.0f, -1.0f, -2.0f,
+    //     0.0f, 0.0f, 0.0f, 1.0f
+    // );
+    // printMat(m);
+    // printf("\n");
+    // REF(&m);
+    // printf("\n");
+    // printMat(m);
     
-    mat m2 = matrix(3,3,
-        1.0f, 2.0f, 1.0f,
-        0.0f, 1.0f, 2.0f,
-        0.0f, 0.0f, 1.0f
-    );
-    RREF(&m2);
-    printf("\n");
-    printMat(m2);
+    // mat m2 = matrix(3,3,
+    //     1.0f, 2.0f, 1.0f,
+    //     0.0f, 1.0f, 2.0f,
+    //     0.0f, 0.0f, 1.0f
+    // );
+    // RREF(&m2);
+    // printf("\n");
+    // printMat(m2);
     
 
     return 0;

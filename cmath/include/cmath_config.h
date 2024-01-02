@@ -31,8 +31,21 @@ typedef long double f128; // 128-bit floating-point (common on other systems)
 }
 */
 
-void swap(u32* a, u32* b);
-void swapFloat(f32* a, f32* b);
+#define MAXIMUM(a, b) (a > b ? a: b)
+#define MINIMUM(a, b) (a < b ? a: b)
+
+#define WORD_BITLEN 8
+
+#if WORD_BITLEN == 8
+typedef u8 WORD;
+#define WORD_ONE 0x01
+#elif WORD_BITLEN == 64
+typedef u64 WORD;
+#define WORD_ONE 0x01LL
+#else
+typedef u32 WORD;
+#define WORD_ONE 0x01
+#endif
 
 
 #endif // _CMATH_CONFIG_H

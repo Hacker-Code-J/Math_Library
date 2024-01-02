@@ -1,6 +1,6 @@
 # Compiler settings
 CC = gcc
-CFLAGS = -Wall -Icmath/include
+CFLAGS = -Wall -Icmath/include -g
 
 # Linker settings
 LDFLAGS = -lm
