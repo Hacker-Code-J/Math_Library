@@ -73,24 +73,46 @@ int main() {
     // vec res = matVecMul(m, v);
     // printMat(toColVec(&res));
 
-    mat m1 = newMat(2, 3,
-        1.0f, 2.0f, 3.0f,
-        4.0f, 5.0f, 6.0f
-    );
-    printMat(m1); printf("\n");
-    mat m2 = newMat(3, 2,
-        10.0f, 11.0f,
-        20.0f, 21.0f,
-        30.0f, 31.0f
-    );
-    printMat(m2); printf("\n");
+    // mat m1 = matrix(2, 3,
+    //     1.0f, 2.0f, 3.0f,
+    //     4.0f, 5.0f, 6.0f
+    // );
+    // printMat(m1); printf("\n");
+    // mat m2 = matrix(3, 2,
+    //     10.0f, 11.0f,
+    //     20.0f, 21.0f,
+    //     30.0f, 31.0f
+    // );
+    // printMat(m2); printf("\n");
 
-    mat resMat = matMatMul(m1, m2);
-    printMat(resMat);
+    // mat resMat = matMatMul(m1, m2);
+    // printMat(resMat);
 
-    freeMat(&m1);
-    freeMat(&m2);
-    freeMat(&resMat);
+    // freeMat(&m1);
+    // freeMat(&m2);
+    // freeMat(&resMat);
+
+    mat m = matrix(4, 4,
+        2.0f, -1.0f, 3.0f, 5.0f,
+        1.0f, -3.0f, 0.0f, 4.0f,
+        3.0f, 0.0f, -1.0f, -2.0f,
+        0.0f, 0.0f, 0.0f, 1.0f
+    );
+    printMat(m);
+    printf("\n");
+    REF(&m);
+    printf("\n");
+    printMat(m);
+    
+    mat m2 = matrix(3,3,
+        1.0f, 2.0f, 1.0f,
+        0.0f, 1.0f, 2.0f,
+        0.0f, 0.0f, 1.0f
+    );
+    RREF(&m2);
+    printf("\n");
+    printMat(m2);
+    
 
     return 0;
 }

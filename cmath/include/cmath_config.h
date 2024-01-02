@@ -31,5 +31,8 @@ typedef long double f128; // 128-bit floating-point (common on other systems)
 }
 */
 
+void swap(u32* a, u32* b);
+void swapFloat(f32* a, f32* b);
+
 
 #endif // _CMATH_CONFIG_H
