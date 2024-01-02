@@ -33,4 +33,7 @@ char* bigintToString(bigint data);
 
 char compareBigint(bigint data1, bigint data2);
 
+bigint addBigint(bigint data1, bigint data2);
+bigint subBigint(bigint data1, bigint data2);
+
 #endif // _BIGINT_H

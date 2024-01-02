@@ -140,3 +140,94 @@ char compareBigint(bigint data1, bigint data2) {
 
     return 0;
 }
+
+bigint addBigint(bigint data1, bigint data2) {
+    if (data1.sign && !data2.sign) {            // data1 + -data2 = data1 - data2
+        data2.sign = true;
+        return subBigint(data1, data2);
+    } else if (!data1.sign && data2.sign) {     // -data1 + data2 = data2 - data1
+        data1.sign = true;
+        return subBigint(data2, data1);
+    }
+
+    u32 used = MAXIMUM(data1.used, data2.used) + 1;
+
+    bigint ret = allocateBigint(used);
+    ret.used = used;
+
+    bool carry = false;
+    for (u32 idx = 0; idx < ret.used; idx++) {
+        WORD res = carry ? 1 : 0;
+        if (idx < data1.used)
+            res += data1.digits[idx];
+        if (idx < data2.used)
+            res += data2.digits[idx];
+
+        if (res >= 10) {
+            carry = true;
+            res -= 10;
+        } else {
+            carry = false;
+        }
+
+        ret.digits[idx] = res;
+    }
+
+    while (!ret.digits[ret.used - 1])
+        ret.used--;
+
+    if (!data1.sign && !data2.sign)
+        ret.sign = false;
+
+    return ret;
+}
+bigint subBigint(bigint data1, bigint data2) {
+    char comp = compareBigint(data1, data2);
+    if (!comp) return BIGINT_ZERO;
+
+    if (data1.sign && !data2.sign) {            // data1 - -data2 = data1 + data2
+        data2.sign = true;
+        return addBigint(data1, data2);
+    } else if (!data1.sign && data2.sign) {     // -data1 - data2 = -data1 + -data2
+        data1.sign = false;
+        return addBigint(data1, data2);
+    } else if (!data1.sign && !data2.sign) {    // -data1 - -data2 = data2 - data1
+        data1.sign = true;
+        data2.sign = true;
+        return subBigint(data2,data1);
+    } else {
+        if (comp < 0) {
+            bigint res = subBigint(data2, data1);
+            res.sign = !res.sign;
+            return res;
+        }
+    }
+
+    u32 used = data1.used;
+
+    bigint ret = allocateBigint(used);
+    ret.used = used;
+
+    bool carry = false;
+    for (u32 idx = 0; idx < ret.used; idx++) {
+        char res = carry ? -1 : 0;
+        if (idx < data1.used)
+            res += data1.digits[idx];
+        if (idx < data2.used)
+            res -= data2.digits[idx];
+
+        if (res < 0) {
+            carry = true;
+            res += 10;
+        } else {
+            carry = false;
+        }
+
+        ret.digits[idx] = res;
+    }
+
+    while (!ret.digits[ret.used - 1])
+        ret.used--;
+    
+    return ret;
+}

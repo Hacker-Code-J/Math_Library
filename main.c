@@ -8,11 +8,13 @@
 int main() {
     printf("%ld %ld\n", sizeof(BINT)*8, sizeof(bigint)*8);
     
-    bigint data = strToBigint("5645654");
+    bigint data = strToBigint("-5645654");
     bigint data2 = newBigint(181231278);
 
-    printf("%s\n", bigintToString(data2));
-    printf("%d\n", (int)compareBigint(data, data2));
+    printf("%s\n", bigintToString(data));
+    printf("%d\n", (int)compareBigint(data, data));
+    printf("%s\n", bigintToString(addBigint(data, data2)));
+    printf("%s\n", bigintToString(subBigint(data2, data)));
 
     freeBigint(&data);
     freeBigint(&data2);
