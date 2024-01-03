@@ -1,12 +1,14 @@
 # Compiler settings
 CC = gcc
-CFLAGS = -Wall -Icmath/include -g
+# CFLAGS = -Wall -Icmath/include -g
+CFLAGS = -Wall -Iaes/include -g
 
 # Linker settings
 LDFLAGS = -lm
 
 # Project files
-SRC_DIR = cmath/src
+# SRC_DIR = cmath/src
+SRC_DIR = aes/src
 SRCS = $(wildcard $(SRC_DIR)/*.c) main.c
 OBJS = $(SRCS:%.c=%.o)
 TARGET = test
