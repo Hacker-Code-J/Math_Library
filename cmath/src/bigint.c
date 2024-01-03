@@ -231,3 +231,24 @@ bigint subBigint(bigint data1, bigint data2) {
     
     return ret;
 }
+
+void divMod(WORD dividend, WORD divisor, WORD* quotient, WORD* remainder) {
+    *quotient = 0;
+
+    while(dividend >= divisor) {
+        dividend -= divisor;
+        (*quotient)++;
+    }
+
+    *remainder = dividend;
+}
+
+u32 numDigits(u32 val, u32 base) {
+    u32 ret = 0;
+    while (val) {
+        ret++;
+        val /= base;
+    }
+
+    return ret;
+}

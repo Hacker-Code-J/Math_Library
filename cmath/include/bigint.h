@@ -36,4 +36,6 @@ char compareBigint(bigint data1, bigint data2);
 bigint addBigint(bigint data1, bigint data2);
 bigint subBigint(bigint data1, bigint data2);
 
+void divMod(WORD dividend, WORD divisor, WORD* quotient, WORD* remainder);
+
 #endif // _BIGINT_H
